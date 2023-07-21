@@ -21,20 +21,20 @@ public class PrimeChecker {
         int numThreads = Integer.parseInt(args[0]);
         String parthToFile = args[1];
 
-        SieveOfEratosthenes sieveOfEratosthenes = new SieveOfEratosthenes(readFile(parthToFile),numThreads);
+        SieveOfEratosthenes sieveOfEratosthenes = new SieveOfEratosthenes(readFile(parthToFile), numThreads);
         ExecutorService executor = Executors.newFixedThreadPool(numThreads);
 
-        for(int i=0;i<numThreads;i++) {
+        for (int i = 0; i < numThreads; i++) {
             executor.execute(() -> {
                 sieveOfEratosthenes.algorithm();
             });
         }
         executor.shutdown();
-        executor.awaitTermination(1,TimeUnit.MINUTES);
+        executor.awaitTermination(1, TimeUnit.MINUTES);
         sieveOfEratosthenes.getResultTable().stream().forEach(System.out::println);
     }
 
-    public static List<MutablePair<Long, Boolean>> readFile( String parthToFile) {
+    public static List<MutablePair<Long, Boolean>> readFile(String parthToFile) {
         List<MutablePair<Long, Boolean>> result = new ArrayList<>();
         File file = new File("test-input.txt");
 
@@ -51,4 +51,3 @@ public class PrimeChecker {
     }
 
 }
-//java -jar <jar-file-name>.jar
